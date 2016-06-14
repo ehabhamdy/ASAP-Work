@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Handy Craft</string>
+    <string name="menu_logout">Logout</string>
+    <string name="signup">SignUp</string>
+</resources>
