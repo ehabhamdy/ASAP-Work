@@ -1,7 +1,8 @@
-package com.team.handycraft;
+package com.team.handycraft.ui;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -11,6 +12,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ActivityBase extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
+    Toolbar mToolbar;
+
+
 
     public void showProgressDialog() {
         if (mProgressDialog == null) {

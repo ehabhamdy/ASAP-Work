@@ -8,15 +8,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityMain">
+        <activity android:name=".ui.ActivityUserMain"></activity>
+        <activity android:name=".ui.ActivitySignUp" />
+        <activity android:name=".ui.ActivityLogin" />
+        <activity android:name=".ui.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivitySignUp" />
-        <activity android:name=".ActivityLogin"></activity>
+        <activity android:name=".ui.ActivityWorkerMain"></activity>
     </application>
 
 </manifest>

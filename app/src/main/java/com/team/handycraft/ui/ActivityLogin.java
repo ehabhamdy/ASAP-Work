@@ -1,8 +1,9 @@
-package com.team.handycraft;
+package com.team.handycraft.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.team.handycraft.R;
+import com.team.handycraft.model.User;
 
 public class ActivityLogin extends ActivityBase {
 
@@ -25,10 +33,16 @@ public class ActivityLogin extends ActivityBase {
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button btn;
+
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference muser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
         mSignUpTextView = (TextView) findViewById(R.id.sigupText);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +92,36 @@ public class ActivityLogin extends ActivityBase {
                         hideProgressDialog();
 
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(ActivityLogin.this, ActivityMain.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+
+                            muser =mDatabase.child("users").child( mAuth.getCurrentUser().getUid());
+
+                            muser.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot)
+                                {
+                                    User user = dataSnapshot.getValue(User.class);
+                                    if(user!=null)
+                                    {
+                                        Intent intent = new Intent(ActivityLogin.this, ActivityUserMain.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(ActivityLogin.this, ActivityWorkerMain.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                }
+
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //Toast.makeText(ActivityLogin.this,"cancaled",Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         } else{
                             Log.w(TAG, "signInWithEmail", task.getException());
