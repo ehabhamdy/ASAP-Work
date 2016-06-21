@@ -29,7 +29,7 @@ public class ActivityUserMain extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -95,7 +95,7 @@ public class ActivityUserMain extends ActivityBase {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_user_main, menu);
         return true;
     }
 
@@ -105,6 +105,9 @@ public class ActivityUserMain extends ActivityBase {
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, ActivityLogin.class));
+                return true;
+            case R.id.action_user_profile:
+                // TODO: 6/21/16 implement user profile activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

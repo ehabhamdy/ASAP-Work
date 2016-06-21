@@ -137,7 +137,7 @@ public class FragmentWorkerSignUp extends Fragment {
     private void writeNewUser(String userId, String name,String phone,String location,String craft,String ssn) {
         Craftsman worker = new Craftsman(name,phone,location,craft,ssn,userId);
 
-        mDatabase.child("Craftsman").child(userId).setValue(worker);
+        mDatabase.child("craftsmen").child(userId).setValue(worker);
     }
 
 

@@ -63,7 +63,7 @@ public class ActivityWorkerMain extends ActivityBase {
                     final String userId = getUid();
 
                     final String email = user.getEmail();
-                    mDatabase.child("Craftsman").child(userId).addListenerForSingleValueEvent(
+                    mDatabase.child("craftsmen").child(userId).addListenerForSingleValueEvent(
                             new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
