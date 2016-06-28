@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.team.handycraft.R;
+import com.team.handycraft.fragment.FragmentClientSignUp;
+import com.team.handycraft.fragment.FragmentWorkerSignUp;
 
 public class ActivitySignUp extends ActivityBase {
 

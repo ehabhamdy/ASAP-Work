@@ -86,6 +86,7 @@
             android:background="@drawable/bg_edt"
             android:hint="SSN"
             android:padding="10dp"
+            android:inputType="number"
             android:textColorHint="#bbbbbb"
             android:textSize="20dp" />
 
@@ -98,6 +99,7 @@
             android:layout_marginTop="-2dp"
             android:background="@drawable/bg_edt"
             android:hint="Password"
+            android:inputType="numberPassword"
             android:padding="10dp"
             android:textColorHint="#bbbbbb"
             android:textSize="20dp" />
@@ -112,7 +114,8 @@
             android:text="Sign Up"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_marginBottom="60dp"/>
     </LinearLayout>
 
 </ScrollView>

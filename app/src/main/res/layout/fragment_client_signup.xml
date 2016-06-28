@@ -57,7 +57,8 @@
             android:text="Sign Up"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="17dp" />
+            android:textSize="17dp"
+            android:layout_marginBottom="60dp"/>
     </LinearLayout>
 </ScrollView>
 

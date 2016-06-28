@@ -1,4 +1,4 @@
-package com.team.handycraft.ui;
+package com.team.handycraft.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.handycraft.R;
 import com.team.handycraft.model.Craftsman;
+import com.team.handycraft.ui.ActivityWorkerMain;
 
 /**
  * Created by Ehab on 6/18/16.

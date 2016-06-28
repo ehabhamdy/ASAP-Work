@@ -1,4 +1,4 @@
-package com.team.handycraft.ui;
+package com.team.handycraft.fragment;
 
 /**
  * Created by Ehab on 6/18/16.
@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.handycraft.R;
 import com.team.handycraft.model.User;
+import com.team.handycraft.ui.ActivityUserMain;
 
 /**
  * A placeholder fragment containing a simple view.
