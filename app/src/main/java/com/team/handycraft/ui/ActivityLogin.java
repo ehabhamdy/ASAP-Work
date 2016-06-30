@@ -74,6 +74,7 @@ public class ActivityLogin extends ActivityBase {
 
     }
 
+
     private void login(String email, String password) {
 
         //Check if the email or password fields are empty
