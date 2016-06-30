@@ -54,7 +54,7 @@ public class ActivitySplash extends ActivityBase {
                     // User is signed in
 
 
-                    muser =mDatabase.child("users").child( mAuth.getCurrentUser().getUid());
+                    muser =mDatabase.child("users").child( user.getUid());
 
                     muser.addValueEventListener(new ValueEventListener() {
                         @Override

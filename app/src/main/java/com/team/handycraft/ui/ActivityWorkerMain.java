@@ -2,7 +2,6 @@ package com.team.handycraft.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,8 +27,7 @@ public class ActivityWorkerMain extends ActivityBase {
     TextView location;
     TextView mEmailTv;
 
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
@@ -46,53 +44,47 @@ public class ActivityWorkerMain extends ActivityBase {
         location = (TextView) findViewById(R.id.txtloca);
         mEmailTv = (TextView) findViewById(R.id.txtmail);
 
-        mAuth = FirebaseAuth.getInstance();
 
-        //final String userId =  mAuth.getCurrentUser().getUid();
-        //va.setText(userId);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
+            final String userId = getUid();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            final String email = user.getEmail();
+            mDatabase.child("craftsmen").child(userId).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Get user value
+                            Craftsman worker = dataSnapshot.getValue(Craftsman.class);
 
-                    final String userId = getUid();
+                            name.setText(worker.username);
+                            phone.setText(worker.phone);
+                            craft.setText(worker.craft);
+                            location.setText(worker.location);
+                            mEmailTv.setText(email);
+                        }
 
-                    final String email = user.getEmail();
-                    mDatabase.child("craftsmen").child(userId).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    // Get user value
-                                    Craftsman worker = dataSnapshot.getValue(Craftsman.class);
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        }
+                    });
+        } else{
+            Intent intent = new Intent(ActivityWorkerMain.this, ActivityLogin.class);
 
-                                    name.setText(worker.username);
-                                    phone.setText(worker.phone);
-                                    craft.setText(worker.craft);
-                                    location.setText(worker.location);
-                                    mEmailTv.setText(email);
-                                }
+            //Removing HomeActivity from the back stack
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    //Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                                }
-                            });
-                }
+            startActivity(intent);
+        }
 
-            }
-        };
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

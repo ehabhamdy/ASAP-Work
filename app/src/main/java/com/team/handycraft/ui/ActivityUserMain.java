@@ -2,7 +2,6 @@ package com.team.handycraft.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,8 +19,6 @@ import com.team.handycraft.model.User;
 
 public class ActivityUserMain extends ActivityBase {
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "Message";
     private FirebaseDatabase mDatabase;
     private TextView userTextView;
@@ -36,62 +33,45 @@ public class ActivityUserMain extends ActivityBase {
         userTextView = (TextView) findViewById(R.id.usertextView);
 
         mDatabase = FirebaseDatabase.getInstance();
-        mAuth = FirebaseAuth.getInstance();
 
         //showProgressDialog();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                    final String userId = getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
 
+            mDatabase.getReference().child("users").child(user.getUid()).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // Get user value
+                            User user = dataSnapshot.getValue(User.class);
+                            //Toast.makeText(HomeActivity.this, user.username, Toast.LENGTH_SHORT).show();
+                            userTextView.setText(user.username);
+                            //Toast.makeText(ActivityUserMain.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                //Toast.makeText(ActivityUserMain.this, child.get, Toast.LENGTH_SHORT).show();
+                            }
+                            //hideProgressDialog();
+                        }
 
-                    mDatabase.getReference().child("users").child(userId).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    // Get user value
-                                    User user = dataSnapshot.getValue(User.class);
-                                    //Toast.makeText(HomeActivity.this, user.username, Toast.LENGTH_SHORT).show();
-                                    userTextView.setText(user.username);
-                                    //Toast.makeText(ActivityUserMain.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-                                    for (DataSnapshot child: dataSnapshot.getChildren()) {
-                                        //Toast.makeText(ActivityUserMain.this, child.get, Toast.LENGTH_SHORT).show();
-                                    }
-                                    //hideProgressDialog();
-                                }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        }
+                    });
+        } else{
+            Intent intent = new Intent(ActivityUserMain.this, ActivityLogin.class);
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                                }
-                            });
-                }
-            }
-        };
+            //Removing HomeActivity from the back stack
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
+            startActivity(intent);
         }
+        
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,7 +81,7 @@ public class ActivityUserMain extends ActivityBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, ActivityLogin.class));
