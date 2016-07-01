@@ -50,6 +50,7 @@ public class ActivityUserMain extends ActivityBase {
                             User user = dataSnapshot.getValue(User.class);
                             //Toast.makeText(HomeActivity.this, user.username, Toast.LENGTH_SHORT).show();
                             userTextView.setText(user.username);
+
                             //Toast.makeText(ActivityUserMain.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
                                 //Toast.makeText(ActivityUserMain.this, child.get, Toast.LENGTH_SHORT).show();
