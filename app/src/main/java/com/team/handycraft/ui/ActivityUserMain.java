@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team.handycraft.R;
 import com.team.handycraft.model.User;
+import com.team.handycraft.utils.Utils;
 
 public class ActivityUserMain extends ActivityBase {
 
@@ -34,7 +35,7 @@ public class ActivityUserMain extends ActivityBase {
 
         userTextView = (TextView) findViewById(R.id.usertextView);
 
-        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase = Utils.getDatabase();
 
         //showProgressDialog();
 
