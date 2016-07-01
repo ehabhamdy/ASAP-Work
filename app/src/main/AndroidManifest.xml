@@ -11,6 +11,7 @@
         <activity android:name=".ui.ActivityUserMain"></activity>
         <activity android:name=".ui.ActivitySignUp" />
         <activity android:name=".ui.ActivityLogin" />
+        <activity android:name=".ui.ActivityPlaceOrder" />
         <activity android:name=".ui.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

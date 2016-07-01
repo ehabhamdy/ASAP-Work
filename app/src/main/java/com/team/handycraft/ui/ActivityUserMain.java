@@ -2,10 +2,12 @@ package com.team.handycraft.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,7 +71,16 @@ public class ActivityUserMain extends ActivityBase {
 
             startActivity(intent);
         }
-        
+
+        FloatingActionButton newOrderBtn = (FloatingActionButton) findViewById(R.id.fab_new_order);
+
+        newOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActivityUserMain.this, ActivityPlaceOrder.class));
+            }
+        });
+
     }
 
 
