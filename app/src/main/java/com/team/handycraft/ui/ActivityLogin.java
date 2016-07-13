@@ -65,9 +65,14 @@ public class ActivityLogin extends ActivityBase {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String e = mEmailField.getText().toString();
-                String p = mPasswordField.getText().toString();
-                login(e, p);
+                if(isOnline()) {
+                    String e = mEmailField.getText().toString();
+                    String p = mPasswordField.getText().toString();
+                    login(e, p);
+                }
+                else {
+                    Toast.makeText(ActivityLogin.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

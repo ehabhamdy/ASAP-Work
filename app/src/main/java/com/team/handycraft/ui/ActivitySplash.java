@@ -27,57 +27,43 @@ public class ActivitySplash extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if(isOnline()) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
             mDatabase = Utils.getDatabase();
 
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                // User is signed in
+            muser = mDatabase.getReference().child("users").child(user.getUid());
 
-                muser = mDatabase.getReference().child("users").child(user.getUid());
-
-                muser.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        if (user != null) {
-                            Intent intent = new Intent(ActivitySplash.this, ActivityUserMain.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(ActivitySplash.this, ActivityWorkerMain.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
+            muser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user != null) {
+                        Intent intent = new Intent(ActivitySplash.this, ActivityUserMain.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(ActivitySplash.this, ActivityWorkerMain.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
+                }
 
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(ActivitySplash.this, "canceled", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            } else {
-                // User is signed out
-                Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
-
-                //Removing HomeActivity from the back stack
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-                startActivity(intent);
-            }
-        }else{
-            // No Network Connection
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(ActivitySplash.this, "canceled", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            // User signed out or No Network Connection
             Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
 
             //Removing HomeActivity from the back stack
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            Toast.makeText(ActivitySplash.this, "Please Connect to the Internet", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
     }
