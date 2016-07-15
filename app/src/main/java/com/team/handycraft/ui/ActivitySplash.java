@@ -27,11 +27,10 @@ public class ActivitySplash extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mDatabase = Utils.getDatabase();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) {
-            // User is signed in
+            mDatabase = Utils.getDatabase();
 
             muser = mDatabase.getReference().child("users").child(user.getUid());
 
@@ -58,15 +57,13 @@ public class ActivitySplash extends ActivityBase {
                     Toast.makeText(ActivitySplash.this, "canceled", Toast.LENGTH_SHORT).show();
                 }
             });
-
         } else {
-            // User is signed out
+            // User signed out or No Network Connection
             Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
 
             //Removing HomeActivity from the back stack
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
             startActivity(intent);
         }
     }
