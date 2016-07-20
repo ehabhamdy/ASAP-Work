@@ -13,6 +13,9 @@ public class Order {
     public String category;
     public String details;
 
+    public Order() {
+    }
+
     public Order(String uid, String Category, String details) {
         this.uid = uid;
         this.category = Category;

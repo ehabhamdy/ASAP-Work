@@ -1,30 +1,43 @@
 package com.team.handycraft.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.team.handycraft.R;
-import com.team.handycraft.model.User;
+import com.team.handycraft.model.Order;
 import com.team.handycraft.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityUserMain extends ActivityBase {
 
     private static final String TAG = "Message";
     private FirebaseDatabase mDatabase;
-    private TextView userTextView;
+    private DatabaseReference mOrdersReference;
+    private RecyclerView mOrdersRecycler;
+    private OrderAdapter mAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,46 +46,19 @@ public class ActivityUserMain extends ActivityBase {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        userTextView = (TextView) findViewById(R.id.usertextView);
+
 
         mDatabase = Utils.getDatabase();
 
-        //showProgressDialog();
+
+        mOrdersReference = mDatabase.getReference()
+                .child("user-orders").child(getUid());
 
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
+        mOrdersRecycler = (RecyclerView) findViewById(R.id.recycler_orders);
+        mOrdersRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-            mDatabase.getReference().child("users").child(user.getUid()).addListenerForSingleValueEvent(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // Get user value
-                            User user = dataSnapshot.getValue(User.class);
-                            //Toast.makeText(HomeActivity.this, user.username, Toast.LENGTH_SHORT).show();
-                            userTextView.setText(user.username);
 
-                            //Toast.makeText(ActivityUserMain.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                //Toast.makeText(ActivityUserMain.this, child.get, Toast.LENGTH_SHORT).show();
-                            }
-                            //hideProgressDialog();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-                        }
-                    });
-        } else{
-            Intent intent = new Intent(ActivityUserMain.this, ActivityLogin.class);
-
-            //Removing HomeActivity from the back stack
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-            startActivity(intent);
-        }
 
         FloatingActionButton newOrderBtn = (FloatingActionButton) findViewById(R.id.fab_new_order);
 
@@ -85,6 +71,13 @@ public class ActivityUserMain extends ActivityBase {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter = new OrderAdapter(this, mOrdersReference);
+        mOrdersRecycler.setAdapter(mAdapter);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,4 +99,147 @@ public class ActivityUserMain extends ActivityBase {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private static class OrderViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView categoryView;
+        public TextView detailsView;
+
+        public OrderViewHolder(View itemView) {
+            super(itemView);
+
+            categoryView = (TextView) itemView.findViewById(R.id.order_category);
+            detailsView = (TextView) itemView.findViewById(R.id.order_details);
+        }
+    }
+
+
+
+    private static class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
+
+        private Context mContext;
+        private DatabaseReference mDatabaseReference;
+        private ChildEventListener mChildEventListener;
+
+        private List<String> mOrderIds = new ArrayList<>();
+        private List<Order> mOrders = new ArrayList<>();
+
+        public OrderAdapter(final Context context, DatabaseReference ref) {
+            mContext = context;
+            mDatabaseReference = ref;
+
+            // Create child event listener
+            // [START child_event_listener_recycler]
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                    Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
+                    // A new order has been added, add it to the displayed list
+                    Order order = dataSnapshot.getValue(Order.class);
+
+                    // [START_EXCLUDE]
+                    // Update RecyclerView
+                    mOrderIds.add(dataSnapshot.getKey());
+                    mOrders.add(order);
+                    notifyItemInserted(mOrders.size() - 1);
+                    // [END_EXCLUDE]
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                    Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+
+                    // A comment has changed, use the key to determine if we are displaying this
+                    // comment and if so displayed the changed comment.
+                    Order newOrder = dataSnapshot.getValue(Order.class);
+                    String commentKey = dataSnapshot.getKey();
+
+                    // [START_EXCLUDE]
+                    int orderIndex = mOrderIds.indexOf(commentKey);
+                    if (orderIndex > -1) {
+                        // Replace with the new data
+                        mOrders.set(orderIndex, newOrder);
+
+                        // Update the RecyclerView
+                        notifyItemChanged(orderIndex);
+                    } else {
+                        Log.w(TAG, "onChildChanged:unknown_child:" + commentKey);
+                    }
+                    // [END_EXCLUDE]
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+
+                    // A comment has changed, use the key to determine if we are displaying this
+                    // comment and if so remove it.
+                    String orderKey = dataSnapshot.getKey();
+
+                    // [START_EXCLUDE]
+                    int orderIndex = mOrderIds.indexOf(orderKey);
+                    if (orderIndex > -1) {
+                        // Remove data from the list
+                        mOrderIds.remove(orderIndex);
+                        mOrders.remove(orderIndex);
+
+                        // Update the RecyclerView
+                        notifyItemRemoved(orderIndex);
+                    } else {
+                        Log.w(TAG, "onChildRemoved:unknown_child:" + orderKey);
+                    }
+                    // [END_EXCLUDE]
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                    Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
+
+                    // A comment has changed position, use the key to determine if we are
+                    // displaying this comment and if so move it.
+                    Order movedOrder = dataSnapshot.getValue(Order.class);
+                    String orderKey = dataSnapshot.getKey();
+
+                    // ...
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "postComments:onCancelled", databaseError.toException());
+                    Toast.makeText(mContext, "Failed to load orders.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            };
+            ref.addChildEventListener(mChildEventListener);
+            // [END child_event_listener_recycler]
+        }
+
+        @Override
+        public OrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            View view = inflater.inflate(R.layout.item_order2, parent, false);
+            return new OrderViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(OrderViewHolder holder, int position) {
+            Order order = mOrders.get(position);
+            holder.categoryView.setText(order.category);
+            holder.detailsView.setText(order.details);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mOrders.size();
+        }
+
+        public void cleanupListener() {
+            if (mChildEventListener != null) {
+                mDatabaseReference.removeEventListener(mChildEventListener);
+            }
+        }
+
+    }
+
 }
