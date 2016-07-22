@@ -24,6 +24,7 @@ public class ActivityPlaceOrder extends ActivityBase {
     private DatabaseReference mDatabase;
 
     Spinner mCategorySpinner;
+    Spinner mLocationSpinner;
     EditText mDetailsField;
 
     @Override
@@ -40,6 +41,8 @@ public class ActivityPlaceOrder extends ActivityBase {
 
         // Spinner element
         mCategorySpinner = (Spinner) findViewById(R.id.work_spinner);
+        mLocationSpinner = (Spinner) findViewById(R.id.location_spinner);
+
 
         // Spinner click listener
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -55,7 +58,16 @@ public class ActivityPlaceOrder extends ActivityBase {
             }
         });
 
-        // Spinner Drop down elements
+        // Craft Spinner Drop down elements
+        List<String> locations = new ArrayList<String>();
+        locations.add("Miami");
+        locations.add("Mandara");
+        locations.add("Sidi Gaber");
+        locations.add("Flemeng");
+        locations.add("Manshia");
+
+
+        // Craft Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Textile Crafts");
         categories.add("Paper Crafts");
@@ -71,6 +83,17 @@ public class ActivityPlaceOrder extends ActivityBase {
 
         // attaching data adapter to spinner
         mCategorySpinner.setAdapter(dataAdapter);
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locations);
+
+        // Drop down layout style - list view with radio button
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        mLocationSpinner.setAdapter(locationAdapter);
+
+
 
 
         FloatingActionButton submitOrderbtn = (FloatingActionButton) findViewById(R.id.fab_submit_order);
@@ -88,9 +111,11 @@ public class ActivityPlaceOrder extends ActivityBase {
         String key = mDatabase.child("orders").push().getKey();
         String category = mCategorySpinner.getSelectedItem().toString();
         String details = mDetailsField.getText().toString();
+        String location = mLocationSpinner.getSelectedItem().toString();
+
         final String userId = getUid();
 
-        Order order = new Order(userId, category, details);
+        Order order = new Order(userId, category, location, details);
 
         Map<String, Object> postValues = order.toMap();
 

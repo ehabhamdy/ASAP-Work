@@ -11,15 +11,17 @@ import java.util.Map;
 public class Order {
     public String uid;
     public String category;
+    public String location;
     public String details;
 
     public Order() {
     }
 
-    public Order(String uid, String Category, String details) {
+    public Order(String uid, String Category, String location, String details) {
         this.uid = uid;
         this.category = Category;
         this.details = details;
+        this.location = location;
     }
 
     public String getCategory() {
@@ -43,6 +45,7 @@ public class Order {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
         result.put("category", category);
+        result.put("location", location);
         result.put("details", details);
 
         return result;

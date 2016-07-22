@@ -16,12 +16,21 @@
 
     <Spinner
         android:layout_marginTop="30dp"
-        android:id="@+id/work_spinner"
+        android:id="@+id/location_spinner"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appbar"></Spinner>
+
+    <Spinner
+        android:layout_marginTop="30dp"
+        android:id="@+id/work_spinner"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location_spinner"></Spinner>
 
     <EditText
         android:id="@+id/prob_desc_et"
