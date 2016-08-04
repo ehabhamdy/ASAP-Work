@@ -30,7 +30,7 @@
         android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location_spinner"></Spinner>
+        android:layout_below="@+id/location_spinner"></Spinner>
 
     <EditText
         android:id="@+id/prob_desc_et"

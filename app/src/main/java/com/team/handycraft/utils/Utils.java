@@ -12,7 +12,6 @@ public class Utils {
 
         if (mDatabase == null) {
             mDatabase = FirebaseDatabase.getInstance();
-            mDatabase.setPersistenceEnabled(true);
         }
         return mDatabase;
     }

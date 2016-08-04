@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_logout">  تسجيل خروج   </string>
+    <string name="signup">   سجل الان    </string>
+    <string name="menu_profile"> الملف الشخصي </string>
+    <string name="app_name">شغل عالسريع</string>
+    <string name="login"> دخول </string>
+    <string name="email_hint"> الايميل </string>
+    <string name="password_hint"> الباسورد </string>
+    <string name="username_hint"> اسم المستخدم </string>
+    <string name="sign_up_hint"> سجل </string>
+
+</resources>
