@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ActivityUserMain"
-    android:orientation="vertical">
+    tools:context=".ui.ActivityUserMain">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -18,8 +17,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar">
 
         <TextView
             android:textColor="@color/colorPrimaryDark"
@@ -28,12 +29,15 @@
             android:text="You Orders in Place"
             android:textSize="40sp"
             android:gravity="center"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true"
+            android:id="@+id/orders_title_tv" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/ll1">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_orders"
@@ -43,14 +47,16 @@
 
     </LinearLayout>
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="right"
-        android:src="@drawable/ic_image_edit"/>
+        android:src="@drawable/ic_image_edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
 
 
-</LinearLayout>
+
+</RelativeLayout>

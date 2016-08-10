@@ -2,6 +2,7 @@ package com.team.handycraft.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,11 @@ public class ActivityUserMain extends ActivityBase {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        TextView tx = (TextView)findViewById(R.id.orders_title_tv);
+
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
+
+        tx.setTypeface(custom_font);
 
 
         mDatabase = Utils.getDatabase();
