@@ -81,12 +81,14 @@ public class ActivityUserMain extends ActivityBase {
     private static class OrderViewHolder extends RecyclerView.ViewHolder {
 
         public TextView categoryView;
+        public  TextView locationView;
         public TextView detailsView;
 
         public OrderViewHolder(View itemView) {
             super(itemView);
 
             categoryView = (TextView) itemView.findViewById(R.id.order_category);
+            locationView = (TextView) itemView.findViewById(R.id.order_location);
             detailsView = (TextView) itemView.findViewById(R.id.order_details);
         }
     }
@@ -203,6 +205,7 @@ public class ActivityUserMain extends ActivityBase {
         public void onBindViewHolder(OrderViewHolder holder, int position) {
             Order order = mOrders.get(position);
             holder.categoryView.setText(order.category);
+            holder.locationView.setText("In: " + order.location);
             holder.detailsView.setText(order.details);
         }
 
