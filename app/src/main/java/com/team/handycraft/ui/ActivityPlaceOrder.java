@@ -14,9 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.team.handycraft.R;
 import com.team.handycraft.model.Order;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ActivityPlaceOrder extends ActivityBase {
@@ -59,21 +57,10 @@ public class ActivityPlaceOrder extends ActivityBase {
         });
 
         // Craft Spinner Drop down elements
-        List<String> locations = new ArrayList<String>();
-        locations.add("Miami");
-        locations.add("Mandara");
-        locations.add("Sidi Gaber");
-        locations.add("Flemeng");
-        locations.add("Manshia");
-
+        String[] locations = getResources().getStringArray(R.array.locations);
 
         // Craft Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Textile Crafts");
-        categories.add("Paper Crafts");
-        categories.add("Decorative Crafts");
-        categories.add("Fashion Crafts");
-        categories.add("Functional Crafts");
+        String[] categories = getResources().getStringArray(R.array.categories);
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);

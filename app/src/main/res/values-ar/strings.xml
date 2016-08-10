@@ -9,5 +9,34 @@
     <string name="password_hint"> الباسورد </string>
     <string name="username_hint"> اسم المستخدم </string>
     <string name="sign_up_hint"> سجل </string>
+    <string name="problem_description"> اكتب وصف بسيط للمشكله </string>
+    <string name="confirm"><![CDATA[اكد الطلب -->]]></string>
+
+    <array name="locations">
+        <item> ابو قير </item>
+        <item> الازاريطه </item>
+        <item> المندره </item>
+        <item> ميامي </item>
+        <item> فليمنج </item>
+        <item> كفر عبدو </item>
+        <item> سموحه </item>
+        <item> سبورتينج </item>
+        <item> ستانلي </item>
+        <item> لوران </item>
+        <item> سيدي جابر </item>
+        <item> سيدي بشر </item>
+        <item> الشاطبي </item>
+        <item> فيكتوريا </item>
+        <item>كانب شيزار</item>
+    </array>
+
+    <array name="categories">
+        <item> سباك </item>
+        <item> كهربائي </item>
+        <item> نجار </item>
+        <item> نقاش </item>
+        <item> مبيض محاره </item>
+        <item> مبلط سيراميك </item>
+    </array>
 
 </resources>

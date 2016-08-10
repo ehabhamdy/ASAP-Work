@@ -14,8 +14,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <Spinner
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/location_spinner"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -40,15 +41,27 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
-        android:hint="Problem Description" />
+        android:hint="@string/problem_description" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_submit_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/appbar"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_navigation_check_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/confirm"
+        android:id="@+id/textView"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:layout_alignTop="@+id/fab_submit_order"
+        android:layout_toLeftOf="@+id/fab_submit_order"
+        android:layout_toStartOf="@+id/fab_submit_order" />
 
 </RelativeLayout>

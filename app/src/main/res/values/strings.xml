@@ -8,4 +8,34 @@
     <string name="password_hint">Password</string>
     <string name="username_hint">Username</string>
     <string name="sign_up_hint">Sign Up</string>
+    <string name="problem_description">Problem Description</string>
+    <string name="confirm"><![CDATA[Confirm -->]]></string>
+
+    <array name="locations">
+        <item>Abu Qir</item>
+        <item>Azaita</item>
+        <item>Mandara</item>
+        <item>Miami</item>
+        <item>Fleming</item>
+        <item>Kafr Abdo</item>
+        <item>Smoha</item>
+        <item>Sporting</item>
+        <item>Stanly</item>
+        <item>Loran</item>
+        <item>Sidi Gaber</item>
+        <item>Saba Basha</item>
+        <item>Shatby</item>
+        <item>Victoria</item>
+        <item>Camp Caesar</item>
+    </array>
+
+    <array name="categories">
+        <item> سباك </item>
+        <item> كهربائي </item>
+        <item> نجار </item>
+        <item> نقاش </item>
+        <item> مبيض محاره </item>
+        <item> مبلط سيراميك </item>
+    </array>
+
 </resources>

@@ -38,7 +38,6 @@ public class ActivityUserMain extends ActivityBase {
     private OrderAdapter mAdapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,27 +78,6 @@ public class ActivityUserMain extends ActivityBase {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, ActivityLogin.class));
-                return true;
-            case R.id.action_user_profile:
-                // TODO: 6/21/16 implement user profile activity
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     private static class OrderViewHolder extends RecyclerView.ViewHolder {
 
         public TextView categoryView;
@@ -112,7 +90,6 @@ public class ActivityUserMain extends ActivityBase {
             detailsView = (TextView) itemView.findViewById(R.id.order_details);
         }
     }
-
 
 
     private static class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
@@ -240,6 +217,27 @@ public class ActivityUserMain extends ActivityBase {
             }
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_user_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, ActivityLogin.class));
+                return true;
+            case R.id.action_user_profile:
+                // TODO: 6/21/16 implement user profile activity
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
