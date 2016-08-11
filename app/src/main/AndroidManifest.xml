@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".ui.ActivityWorkerMain" />
         <activity android:name=".ui.ActivityPlaceOrder"></activity>
+        <activity android:name=".ui.ActivityOrderDetails"></activity>
     </application>
 
 </manifest>
