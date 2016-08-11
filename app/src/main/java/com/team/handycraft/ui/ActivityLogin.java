@@ -1,6 +1,7 @@
 package com.team.handycraft.ui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,13 @@ public class ActivityLogin extends ActivityBase {
         setContentView(R.layout.activity_login);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView tv = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        tv.setText("Login");
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
+        tv.setTypeface(custom_font);
+
 
         mSignUpTextView = (TextView) findViewById(R.id.sigupText);
         mSignUpTextView.setOnClickListener(new View.OnClickListener() {

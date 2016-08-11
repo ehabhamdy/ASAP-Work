@@ -1,5 +1,6 @@
 package com.team.handycraft.ui;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,7 +33,14 @@ public class ActivityPlaceOrder extends ActivityBase {
         setContentView(R.layout.activity_place_order);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        setTitle("Request Order");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        //setTitle("Request Order");
+        TextView tv = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        tv.setText("Request Order");
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
+        tv.setTypeface(custom_font);
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 

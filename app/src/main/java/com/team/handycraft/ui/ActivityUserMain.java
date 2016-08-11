@@ -45,12 +45,16 @@ public class ActivityUserMain extends ActivityBase {
         setContentView(R.layout.activity_user_main);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView tx = (TextView)findViewById(R.id.orders_title_tv);
 
+        TextView tv = (TextView) mToolbar.findViewById(R.id.toolbar_title);
+        tv.setText("Orders in place");
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
+        tv.setTypeface(custom_font);
 
-        tx.setTypeface(custom_font);
+        //TextView tx = (TextView)findViewById(R.id.orders_title_tv);
+        //tx.setTypeface(custom_font);
 
 
         mDatabase = Utils.getDatabase();
@@ -239,7 +243,12 @@ public class ActivityUserMain extends ActivityBase {
         switch (item.getItemId()) {
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, ActivityLogin.class));
+
+                Intent intent = new Intent(this, ActivityLogin.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
                 return true;
             case R.id.action_user_profile:
                 // TODO: 6/21/16 implement user profile activity
