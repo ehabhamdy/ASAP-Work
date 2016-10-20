@@ -1,4 +1,4 @@
-package com.team.handycraft.model;
+package com.team.asapwork.model;
 
 /**
  * Created by Ahmed on 15/06/2016.

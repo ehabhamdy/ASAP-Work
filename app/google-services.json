@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "379348609036",
-    "firebase_url": "https://handy-craft-166e2.firebaseio.com",
-    "project_id": "handy-craft-166e2",
-    "storage_bucket": "handy-craft-166e2.appspot.com"
+    "project_number": "882834511701",
+    "firebase_url": "https://asap-work.firebaseio.com",
+    "project_id": "asap-work",
+    "storage_bucket": "asap-work.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:379348609036:android:cb3490eeb8432775",
+        "mobilesdk_app_id": "1:882834511701:android:46f3eca9431e97b3",
         "android_client_info": {
-          "package_name": "com.team.handycraft"
+          "package_name": "com.team.asapwork"
         }
       },
       "oauth_client": [
         {
-          "client_id": "379348609036-cosfh510e5av48rm52qms4geso327jjk.apps.googleusercontent.com",
+          "client_id": "882834511701-5l86jhmdeqchcjvvt3ck8pe187qeo739.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA93qcKM9KWEQR-oOczlivrF_sBssxRUl0"
+          "current_key": "AIzaSyCCaaeBc7SXYmxj_i_JfJXOEAHpcgACwN0"
         }
       ],
       "services": {

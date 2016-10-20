@@ -1,4 +1,4 @@
-package com.team.handycraft.fragment;
+package com.team.asapwork.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,9 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team.handycraft.R;
-import com.team.handycraft.model.Craftsman;
-import com.team.handycraft.ui.ActivityWorkerMain;
+import com.team.asapwork.R;
+import com.team.asapwork.model.Craftsman;
+import com.team.asapwork.ui.ActivityWorkerMain;
 
 /**
  * Created by Ehab on 6/18/16.

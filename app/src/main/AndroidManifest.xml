@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.team.handycraft">
+    package="com.team.asapwork">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".ASAPApplication"
+        android:name="com.team.asapwork.ASAPApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ActivityUserMain" />
-        <activity android:name=".ui.ActivitySignUp" />
-        <activity android:name=".ui.ActivityLogin" />
-        <activity android:name=".ui.ActivitySplash">
+        <activity android:name="com.team.asapwork.ui.ActivityUserMain" />
+        <activity android:name="com.team.asapwork.ui.ActivitySignUp" />
+        <activity android:name="com.team.asapwork.ui.ActivityLogin" />
+        <activity android:name="com.team.asapwork.ui.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ActivityWorkerMain" />
-        <activity android:name=".ui.ActivityPlaceOrder"></activity>
+        <activity android:name="com.team.asapwork.ui.ActivityWorkerMain" />
+        <activity android:name="com.team.asapwork.ui.ActivityPlaceOrder"></activity>
     </application>
 
 </manifest>

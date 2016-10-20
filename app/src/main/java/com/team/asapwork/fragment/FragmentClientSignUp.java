@@ -1,4 +1,4 @@
-package com.team.handycraft.fragment;
+package com.team.asapwork.fragment;
 
 /**
  * Created by Ehab on 6/18/16.
@@ -25,9 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team.handycraft.R;
-import com.team.handycraft.model.User;
-import com.team.handycraft.ui.ActivityUserMain;
+import com.team.asapwork.R;
+import com.team.asapwork.model.User;
+import com.team.asapwork.ui.ActivityUserMain;
 
 /**
  * A placeholder fragment containing a simple view.

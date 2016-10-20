@@ -1,4 +1,4 @@
-package com.team.handycraft.ui;
+package com.team.asapwork.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,9 +9,9 @@ import android.support.v4.view.ViewPager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.team.handycraft.R;
-import com.team.handycraft.fragment.FragmentClientSignUp;
-import com.team.handycraft.fragment.FragmentWorkerSignUp;
+import com.team.asapwork.R;
+import com.team.asapwork.fragment.FragmentClientSignUp;
+import com.team.asapwork.fragment.FragmentWorkerSignUp;
 
 public class ActivitySignUp extends ActivityBase {
 
