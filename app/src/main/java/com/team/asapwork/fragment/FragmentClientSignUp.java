@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.asapwork.R;
 import com.team.asapwork.model.User;
+import com.team.asapwork.ui.ActivityLogin;
 import com.team.asapwork.ui.ActivityUserMain;
 
 /**
@@ -91,9 +92,9 @@ public class FragmentClientSignUp extends Fragment {
                 //Toast.makeText(SignUpActivity.this, email, Toast.LENGTH_SHORT).show();
                 //Log.i(TAG, email);
 
+
             }
         });
-
 
         return rootView;
     }
@@ -117,6 +118,8 @@ public class FragmentClientSignUp extends Fragment {
 
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser(), username);
+                            FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification();
+
                         }else {
                             Toast.makeText(getActivity(), "Sign Up Failed",Toast.LENGTH_SHORT).show();
                         }
@@ -150,10 +153,17 @@ public class FragmentClientSignUp extends Fragment {
         writeNewUser(user.getUid(), username);
 
         // Go to MainActivity
-        Intent intent = new Intent(getActivity(), ActivityUserMain.class);
+//        Intent intent = new Intent(getActivity(), ActivityUserMain.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+
+        Toast.makeText(getActivity(), "Check your email inbox to verify your email and login here", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), ActivityLogin.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+
         //finish();
     }
 

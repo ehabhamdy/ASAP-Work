@@ -27,16 +27,14 @@ import com.team.asapwork.model.User;
 
 public class ActivityLogin extends ActivityBase {
 
-    private FirebaseAuth mAuth;
     private static final String TAG = "Message";
     protected TextView mSignUpTextView;
-
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference muser;
+    private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button btn;
-
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference muser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class ActivityLogin extends ActivityBase {
 
         TextView tv = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         tv.setText("Login");
-        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/VarelaRound-Regular.ttf");
         tv.setTypeface(custom_font);
 
 
@@ -68,22 +66,26 @@ public class ActivityLogin extends ActivityBase {
         btn = (Button) findViewById(R.id.button);
 
 
-
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isOnline()) {
+                if (isOnline()) {
                     String e = mEmailField.getText().toString();
                     String p = mPasswordField.getText().toString();
                     login(e, p);
-                }
-                else {
+                } else {
                     Toast.makeText(ActivityLogin.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        TextView reset = (TextView) findViewById(R.id.reset);
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
     }
 
@@ -97,6 +99,7 @@ public class ActivityLogin extends ActivityBase {
 
         showProgressDialog();
         mAuth = FirebaseAuth.getInstance();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -105,24 +108,24 @@ public class ActivityLogin extends ActivityBase {
 
                         hideProgressDialog();
 
-                        if (task.isSuccessful()) {
+//                        if(mAuth.getCurrentUser() != null && !mAuth.getCurrentUser().isEmailVerified() ){
+//                            Toast.makeText(ActivityLogin.this, "Account is not verified check your email", Toast.LENGTH_SHORT).show();
+//                            FirebaseAuth.getInstance().signOut();
+//                        }
+                        if (task.isSuccessful() && mAuth.getCurrentUser().isEmailVerified()) {
 
-                            muser =mDatabase.child("users").child( mAuth.getCurrentUser().getUid());
+                            muser = mDatabase.child("users").child(mAuth.getCurrentUser().getUid());
 
                             muser.addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot)
-                                {
+                                public void onDataChange(DataSnapshot dataSnapshot) {
                                     User user = dataSnapshot.getValue(User.class);
-                                    if(user!=null)
-                                    {
+                                    if (user != null) {
                                         Intent intent = new Intent(ActivityLogin.this, ActivityUserMain.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         Intent intent = new Intent(ActivityLogin.this, ActivityWorkerMain.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -137,16 +140,19 @@ public class ActivityLogin extends ActivityBase {
                                 }
                             });
 
-                        } else{
+                        } else {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(ActivityLogin.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            if (mAuth.getCurrentUser() != null && !mAuth.getCurrentUser().isEmailVerified()) {
+                                Toast.makeText(ActivityLogin.this, "Account is not verified \n   Authentication Failed!", Toast.LENGTH_SHORT).show();
+                                FirebaseAuth.getInstance().signOut();
+
+                            } else {
+                                Toast.makeText(ActivityLogin.this, "Email or Password is wrong \n    Authentication Failed!", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
 
                     }
-
-
-
 
 
                 });

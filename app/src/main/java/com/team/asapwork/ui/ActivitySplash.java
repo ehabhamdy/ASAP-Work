@@ -48,31 +48,39 @@ public class ActivitySplash extends ActivityBase {
 
                     muser = mDatabase.getReference().child("users").child(user.getUid());
 
-                    muser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            if (user != null) {
-                                Intent intent = new Intent(ActivitySplash.this, ActivityUserMain.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
-                            } else {
-                                Intent intent = new Intent(ActivitySplash.this, ActivityWorkerMain.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                    if (user.isEmailVerified()) {
+
+                        muser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User user = dataSnapshot.getValue(User.class);
+                                if (user != null) {
+                                    Intent intent = new Intent(ActivitySplash.this, ActivityUserMain.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                                } else {
+                                    Intent intent = new Intent(ActivitySplash.this, ActivityWorkerMain.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+                                }
                             }
-                        }
 
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(ActivitySplash.this, "canceled", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Toast.makeText(ActivitySplash.this, "canceled", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
                 } else {
                     // User signed out or No Network Connection
                     Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
