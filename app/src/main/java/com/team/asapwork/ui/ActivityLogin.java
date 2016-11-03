@@ -78,15 +78,7 @@ public class ActivityLogin extends ActivityBase {
                 }
             }
         });
-
-        TextView reset = (TextView) findViewById(R.id.reset);
-
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
+        
     }
 
 
