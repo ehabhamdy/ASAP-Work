@@ -73,11 +73,6 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/signup" />
 
-            <TextView
-                android:text="reset password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/reset" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
