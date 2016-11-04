@@ -1,8 +1,10 @@
 package com.team.asapwork.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,16 +57,10 @@ public class ActivitySplash extends ActivityBase {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 User user = dataSnapshot.getValue(User.class);
                                 if (user != null) {
-                                    Intent intent = new Intent(ActivitySplash.this, ActivityUserMain.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                    goToActivity(ActivityUserMain.class);
                                     //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                                 } else {
-                                    Intent intent = new Intent(ActivitySplash.this, ActivityWorkerMain.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                    goToActivity(ActivityWorkerMain.class);
                                     //overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                                 }
                             }
@@ -76,19 +72,11 @@ public class ActivitySplash extends ActivityBase {
                             }
                         });
                     }else{
-                        Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        goToActivity(ActivityLogin.class);
                     }
                 } else {
                     // User signed out or No Network Connection
-                    Intent intent = new Intent(ActivitySplash.this, ActivityLogin.class);
-
-                    //Removing HomeActivity from the back stack
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    goToActivity(ActivityLogin.class);
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
 
@@ -97,6 +85,13 @@ public class ActivitySplash extends ActivityBase {
         }, SPLASH_TIME_OUT);
 
 
+    }
+
+    private void goToActivity(Class activity) {
+        Intent intent = new Intent(ActivitySplash.this, activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 }
