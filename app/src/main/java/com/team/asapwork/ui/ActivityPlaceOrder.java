@@ -21,7 +21,8 @@ import java.util.Map;
 
 public class ActivityPlaceOrder extends ActivityBase {
 
-    private DatabaseReference mDatabase;
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseReference;
 
     Spinner mCategorySpinner;
     Spinner mLocationSpinner;
@@ -41,8 +42,8 @@ public class ActivityPlaceOrder extends ActivityBase {
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/VarelaRound-Regular.ttf");
         tv.setTypeface(custom_font);
 
-
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabase.getReference();
 
         mDetailsField = (EditText) findViewById(R.id.prob_desc_et);
 
@@ -104,7 +105,7 @@ public class ActivityPlaceOrder extends ActivityBase {
     }
 
     private void submitOrder() {
-        String key = mDatabase.child("orders").push().getKey();
+        String key = mDatabaseReference.child("orders").push().getKey();
         String category = mCategorySpinner.getSelectedItem().toString();
         String details = mDetailsField.getText().toString();
         String location = mLocationSpinner.getSelectedItem().toString();
@@ -120,8 +121,7 @@ public class ActivityPlaceOrder extends ActivityBase {
         childUpdates.put("/orders/" + key, postValues);
         childUpdates.put("/user-orders/" + userId + "/" + key, postValues);
 
-        mDatabase.updateChildren(childUpdates);
+        mDatabaseReference.updateChildren(childUpdates);
 
     }
 }
-
