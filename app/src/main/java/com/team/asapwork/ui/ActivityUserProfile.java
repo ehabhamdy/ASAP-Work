@@ -82,7 +82,10 @@ public class ActivityUserProfile extends ActivityBase {
                 User user = dataSnapshot.getValue(User.class);
                 userName = user.username;
                 mUserNameTextView.setText(user.username);
-                Glide.with(mProfileImageView.getContext()).load(user.photoUrl).into(mProfileImageView);
+                if(user.photoUrl == null)
+                    mProfileImageView.setImageResource(R.drawable.default_thumbnail);
+                else
+                    Glide.with(mProfileImageView.getContext()).load(user.photoUrl).into(mProfileImageView);
             }
 
             @Override
