@@ -252,6 +252,8 @@ public class ActivityUserMain extends ActivityBase {
                 return true;
             case R.id.action_user_profile:
                 // TODO: 6/21/16 implement user profile activity
+                Intent profileIntent = new Intent(this, ActivityUserProfile.class);
+                startActivity(profileIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

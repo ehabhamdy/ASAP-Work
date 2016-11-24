@@ -14,6 +14,8 @@
         <activity android:name="com.team.asapwork.ui.ActivityUserMain" />
         <activity android:name="com.team.asapwork.ui.ActivitySignUp" />
         <activity android:name="com.team.asapwork.ui.ActivityLogin" />
+        <activity android:name="com.team.asapwork.ui.ActivityUserProfile" />
+
         <activity android:name="com.team.asapwork.ui.ActivitySplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
