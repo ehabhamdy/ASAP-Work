@@ -6,6 +6,7 @@ package com.team.asapwork.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,16 +20,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.team.asapwork.R;
 import com.team.asapwork.model.User;
 import com.team.asapwork.ui.ActivityLogin;
-import com.team.asapwork.ui.ActivityUserMain;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,12 +48,15 @@ public class FragmentClientSignUp extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mFirebaseDatabase;
     private FirebaseAuth mAuth;
+
+
 
     EditText mUsernameField;
     EditText mEmailField;
     EditText mPasswordField;
+
 
     private ProgressDialog mProgressDialog;
 
@@ -71,8 +80,10 @@ public class FragmentClientSignUp extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_client_signup, container, false);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+
+
 
         mEmailField = (EditText) rootView.findViewById(R.id.emailEditText);
         mPasswordField = (EditText) rootView.findViewById(R.id.passwordEditText);
@@ -140,7 +151,7 @@ public class FragmentClientSignUp extends Fragment {
             mPasswordField.setError("Required");
             result = false;
         } else {
-            mPasswordField.setError(null);
+            mPasswordField. setError(null);
         }
 
         return result;
@@ -169,9 +180,9 @@ public class FragmentClientSignUp extends Fragment {
 
     // [START basic_write]
     private void writeNewUser(String userId, String name) {
-        User user = new User(name);
+        User user = new User(name, null);
 
-        mDatabase.child("users").child(userId).setValue(user);
+        mFirebaseDatabase.child("users").child(userId).setValue(user);
     }
     // [END basic_write]
 
