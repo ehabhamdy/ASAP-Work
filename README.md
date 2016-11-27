@@ -7,6 +7,7 @@
 
 ### Registration Note: 
 You have to use a real email as the application will require you to verify it using an automatic verification email.
+So please use your own email and make sure to check the verification email after signing up.
 
 If you want to test the app, please use the following verified email to login: 
 > email : black_magic_202@yahoo.com
